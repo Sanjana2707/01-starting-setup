@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable} from 'rxjs';
 import { Store } from '@ngrx/store';
+import { selectCount, selectDoubleCount } from '../store/counter.selectors';
 
 
 @Component({
@@ -9,12 +10,12 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./counter-output.component.css'],
 })
 export class CounterOutputComponent {
-  count$: Observable<number>;  // $ sign is a convention to indicate its an observable
-
-  constructor(private store:Store<{counter:number}>) {   // inject store , we can use since its provided in rootand the type of store is defined here
-  //  because we have to tell what kind of data we are expecting from the store orlese typescript wont know what kind of data we are expecting from the store
-         this.count$=store.select('counter'); //counter is the key we defined in app.module.ts which is used to map the reducer and select is used to get the data from the store
-
+  count$: Observable<number>;  
+  doubleCount$: Observable<number>;
+  constructor(private store:Store<{counter:number}>) {   
+  //this.count$=store.select('counter'); //counter is the key we defined in app.module.ts which is used to map the reducer 
+      this.count$=store.select(selectCount); // we can also use a selector function to get the data from the store
+      this.doubleCount$=store.select(selectDoubleCount); // we can also use a selector function to get the data from the store
   
 }
 }
